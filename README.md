@@ -6,8 +6,8 @@
 **Program:** ZENAIZ x BVRIT Hyderabad Data Engineering Internship Program  
 **Track:** Data Engineering  
 **Duration:** 12 Weeks  
-**Team:** [Team Number / Team Name]  
-**Students:** [Student 1], [Student 2], [Student 3]  
+**Team:** 10 
+**Students:** G.SHIVANI, B.LIKHITHA, [Student 3]  
 **AI Teammate:** Used responsibly for explanation, debugging, review, and documentation support.
 
 ---
@@ -16,12 +16,11 @@
 
 Write 5–8 lines explaining the assigned project.
 
-Example structure:
-
-- **Domain:** [Urban Mobility / IPL Matchday / Weather / etc.]
-- **Core engineering problem:** [What raw data needs to become trusted insight?]
-- **Main pipeline:** Raw Sources → Bronze → Silver → Data Quality → Gold → Power BI → Streaming Simulation
-- **Final outcome:** GitHub repo, Databricks notebooks, Gold outputs, Power BI dashboard, streaming simulation, final demo.
+Domain: Supply Chain & Logistics.
+Core engineering problem: Convert raw data from orders, shipments, inventory, warehouses, and suppliers into clean, reliable, and real-time insights for tracking the movement of goods.
+Main pipeline: Raw Data Sources → Bronze (raw ingestion) → Silver (cleaned & transformed data) → Data Quality Validation → Gold (business-ready datasets) → Power BI Dashboard → Streaming Simulation for live shipment updates.
+Technologies: Databricks, Apache Spark, Delta Lake, Power BI, GitHub, and streaming tools.
+Final outcome: An end-to-end data engineering solution with a GitHub repository, Databricks notebooks, Bronze/Silver/Gold data layers, validated Gold outputs, interactive Power BI dashboards, a streaming simulation of supply chain events, and a final project demonstration.
 
 ---
 
