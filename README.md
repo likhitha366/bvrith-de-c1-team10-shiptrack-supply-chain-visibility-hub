@@ -1,4 +1,4 @@
-# [PROJECT TITLE]
+# ShipTrack: Supply chain visibility hub
 
 > **Student note:** Start with `00_START_HERE.md` and `00_TEMPLATE_INDEX.md`. The placeholder files inside this repo are the templates.
 
@@ -7,7 +7,7 @@
 **Track:** Data Engineering  
 **Duration:** 12 Weeks  
 **Team:** 10 
-**Students:** G.SHIVANI, B.LIKHITHA, [Student 3]  
+**Students:** G.SHIVANI, B.LIKHITHA, R Meenakshi Reddy
 **AI Teammate:** Used responsibly for explanation, debugging, review, and documentation support.
 
 ---
