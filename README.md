@@ -14,13 +14,11 @@
 
 ## 1. Project Summary
 
-Write 5–8 lines explaining the assigned project.
-
-Domain: Supply Chain & Logistics.
-Core engineering problem: Convert raw data from orders, shipments, inventory, warehouses, and suppliers into clean, reliable, and real-time insights for tracking the movement of goods.
-Main pipeline: Raw Data Sources → Bronze (raw ingestion) → Silver (cleaned & transformed data) → Data Quality Validation → Gold (business-ready datasets) → Power BI Dashboard → Streaming Simulation for live shipment updates.
-Technologies: Databricks, Apache Spark, Delta Lake, Power BI, GitHub, and streaming tools.
-Final outcome: An end-to-end data engineering solution with a GitHub repository, Databricks notebooks, Bronze/Silver/Gold data layers, validated Gold outputs, interactive Power BI dashboards, a streaming simulation of supply chain events, and a final project demonstration.
+**Domain:** Supply Chain & Logistics.  
+**Core engineering problem:** Convert raw data from orders, shipments, inventory, warehouses, and suppliers into clean, reliable, and real-time insights for tracking the movement of goods.  
+**Main pipeline:** Raw Data Sources → Bronze (raw ingestion) → Silver (cleaned & transformed data) → Data Quality Validation → Gold (business-ready datasets) → Power BI Dashboard → Streaming Simulation for live shipment updates.  
+**Technologies:** Databricks, Apache Spark, Delta Lake, Power BI, GitHub, and streaming tools.  
+**Final outcome:** An end-to-end data engineering solution with a GitHub repository, Databricks notebooks, Bronze/Silver/Gold data layers, validated Gold outputs, interactive Power BI dashboards, a streaming simulation of supply chain events, and a final project demonstration.  
 
 ---
 
