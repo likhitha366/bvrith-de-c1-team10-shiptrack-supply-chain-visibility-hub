@@ -9,7 +9,7 @@
 
 # 1. Sprint Goal
 
-The objective of Week 02 was to understand the ShipTrack dataset by identifying all raw and reference source files, documenting their schemas, defining primary and foreign keys, understanding the business grain of each dataset, documenting synthetic data assumptions, and preparing sample datasets before implementing the Bronze layer.
+The objective for Week 02 was to understand the ShipTrack dataset by identifying all raw and reference source files, documenting their schemas, defining primary and foreign keys, understanding the business grain of each dataset, documenting synthetic data assumptions, and preparing sample datasets before implementing the Bronze layer.
 
 ---
 
