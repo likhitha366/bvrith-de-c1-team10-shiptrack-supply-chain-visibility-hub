@@ -1,7 +1,7 @@
 # Week 07 Log — Gold Layer Development
 
 **Week:** 7
-**Date range:** [Add dates]
+**Date range:** [1-7 September ]
 **Team:** 10
 **Project:** ShipTrack
 
