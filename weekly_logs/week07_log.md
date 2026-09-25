@@ -1,77 +1,125 @@
 # Week 07 Log — Gold Layer Development
 
-**Week:** 7
-**Date range:** [1-7 September ]
-**Team:** 10
-**Project:** ShipTrack
+**Week:** 7  
+**Team:** 10  
+**Project:** ShipTrack  
 
 ---
 
 ## 1. Sprint Goal
 
-The goal for Week 07 was to develop and validate the **Gold layer** of the ShipTrack data pipeline.
-The team focused on creating business-ready datasets, applying business logic and data quality checks, and preparing trusted data for reporting and analytics.
+The goal for Week 07 was to develop and validate the **Gold layer** of the ShipTrack data pipeline using the Trusted Silver shipment data produced by the Week 06 data-quality framework.
+
+The Gold layer converts trusted shipment records into business-ready aggregated datasets for reporting and analytics.
 
 ---
 
 ## 2. Work Completed
 
-| Task                                                              | Owner   | Status | Evidence                        |
-| ----------------------------------------------------------------- | ------- | ------ | ------------------------------- |
-| Developed Gold-layer datasets from the Trusted Silver data        | Team 10 | Done   | Gold-layer notebook             |
-| Applied business rules and transformations required for analytics | Team 10 | Done   | Gold transformation code        |
-| Implemented data quality checks on Gold datasets                  | Team 10 | Done   | DQ rules / notebook             |
-| Validated Gold data for missing, duplicate, and invalid records   | Team 10 | Done   | Validation output / screenshots |
-| Verified Gold tables and their final schema                       | Team 10 | Done   | Databricks table / notebook     |
-| Updated project files and documentation in GitHub                 | Team 10 | Done   | GitHub repository               |
+| Task | Status | Evidence |
+|---|---|---|
+| Developed daily shipment Gold metrics | Done | Gold aggregation notebook |
+| Developed carrier-level Gold metrics | Done | Gold aggregation notebook |
+| Developed route-level Gold metrics | Done | Gold aggregation notebook |
+| Developed hub-level Gold metrics | Done | Gold aggregation notebook |
+| Configured Gold transformations to use `trusted_shipments` | Done | Gold SQL / notebook |
+| Validated Gold outputs and row counts | Done | Gold validation output |
+| Documented Gold metrics and data flow | Done | `docs/gold_metrics_definition.md` |
+| Updated project documentation in GitHub | Done | GitHub repository |
 
 ---
 
-## 3. Key Decisions
+## 3. Implemented Gold Tables
 
-* Gold datasets were designed to contain **business-ready and analytics-ready data** derived from the Trusted Silver layer.
-* Business rules and transformations were applied before exposing the data for reporting and analysis.
-* Data quality validation was performed to ensure that the Gold layer contains reliable and consistent records.
-* The final Gold-layer schema was kept structured and easy to use for downstream dashboards and analytics.
+| Gold Table | Grain | Verified Rows |
+|---|---|---:|
+| `gold_shipment_daily_metrics` | One row per booking date | 180 |
+| `gold_carrier_metrics` | One row per carrier | 9 |
+| `gold_route_metrics` | One row per route | 100 |
+| `gold_hub_metrics` | One row per hub | 13 |
 
----
-
-## 4. Blockers / Risks
-
-| Blocker                                                          | Impact                           | Help Needed                              |
-| ---------------------------------------------------------------- | -------------------------------- | ---------------------------------------- |
-| Some records required additional validation after transformation | Could affect Gold-layer accuracy | Review and validate transformation rules |
-| Ensuring consistency between Silver and Gold schemas             | Possible schema mismatch         | Team review and testing                  |
-| Data quality issues in transformed records                       | May affect reporting results     | Additional DQ validation                 |
+The Gold layer uses `trusted_shipments` as its shipment source. This preserves the Week 06 isolation between trusted and quarantined records.
 
 ---
 
-## 5. Evidence Added to GitHub
+## 4. Key Metrics
 
-* Gold-layer Databricks notebook updated.
-* Gold transformation and business-rule code added.
-* Data quality validation code/results added.
-* Screenshots of Gold-layer outputs added.
-* Final Gold table/schema validation evidence added.
-* Week 07 project log updated.
+The Gold layer supports business metrics including:
 
----
+- Shipment volume
+- Delivered shipments
+- Delayed deliveries
+- Delivery rate
+- On-time delivery rate
+- Average delivery hours
+- Total freight
+- Hub flow counts
 
-## 6. AI Transparency Note
-
-| Question                                | Response                                                                                                                                                                   |
-| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Where AI helped**                     | AI was used to assist with drafting transformation logic, data quality checks, and documentation structure for the Gold layer.                                             |
-| **What we changed after AI suggestion** | The suggested code and rules were modified according to our project's Gold-layer requirements, dataset structure, and team implementation.                                 |
-| **What we verified manually**           | We manually checked the transformation results, column names, data types, business rules, duplicate records, missing values, and Gold-layer outputs in Databricks.         |
-| **What we can explain without AI**      | We can explain the purpose of the Gold layer, Silver-to-Gold transformation process, business rules, data quality checks, validation process, and the final Gold datasets. |
+The exact SQL expressions and output columns are defined by the Gold aggregation notebook.
 
 ---
 
-## 7. Next Week Preparation
+## 5. Validation
 
-* Validate Gold datasets with additional test cases.
-* Prepare Gold-layer data for dashboards and analytics.
-* Review end-to-end flow from Bronze → Trusted Silver → Gold.
-* Complete remaining documentation and evidence.
-* Prepare the project for final review and demonstration.
+The completed Gold outputs were checked for successful table creation and expected aggregation grain.
+
+Current verified row counts:
+
+- `gold_shipment_daily_metrics`: 180
+- `gold_carrier_metrics`: 9
+- `gold_route_metrics`: 100
+- `gold_hub_metrics`: 13
+
+The Gold layer is intended to be the downstream source for Week 08 dashboard/reporting work.
+
+---
+
+## 6. Data Flow
+
+```text
+Raw Data
+   ↓
+Bronze
+   ↓
+Silver
+   ↓
+Week 06 DQ Evaluation
+   ↓
+Trusted Silver
+   ↓
+Gold Aggregations
+   ├── Daily Shipment Metrics
+   ├── Carrier Metrics
+   ├── Route Metrics
+   └── Hub Metrics
+   ↓
+Dashboard / Reporting
+```
+
+---
+
+## 7. Blockers / Risks
+
+- Gold metrics depend on the current Trusted Silver dataset and may change if the upstream DQ results change.
+- Dashboard development is a downstream Week 08 activity.
+- Gold metric definitions should remain synchronized with the implemented notebook columns and SQL logic.
+
+---
+
+## 8. AI Transparency Note
+
+| Question | Response |
+|---|---|
+| **Where AI helped** | AI assisted with drafting Gold aggregation logic and documentation structure. |
+| **What we changed after AI suggestion** | The implementation was aligned with the actual ShipTrack Silver schema, Trusted shipment data, and project requirements. |
+| **What we verified manually** | Gold table sources, aggregation outputs, row counts, and metric definitions were checked against the implemented notebook and Databricks results. |
+| **What we can explain without AI** | We can explain the Silver-to-Trusted-to-Gold flow, aggregation grains, business metrics, and validation process. |
+
+---
+
+## 9. Next Week Preparation
+
+- Connect the Gold outputs to the reporting/dashboard layer.
+- Build required Week 08 visuals using Gold tables.
+- Preserve the Trusted → Gold data flow.
+- Capture final Gold validation evidence for project submission.
