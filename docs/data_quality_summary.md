@@ -1,90 +1,92 @@
 # Data Quality Summary
 
-**Project:** ShipTrack – Supply Chain Visibility Hub
-
+**Project:** ShipTrack – Supply Chain Visibility Hub  
 **Week:** 6
 
-**Purpose:** Run meaningful data quality checks on Silver tables, capture failures, and explain their business impact.
+**Purpose:** Validate Silver shipment data using explicit data-quality rules, isolate failed records, and document their downstream impact.
 
 ---
 
-## 1. Quality Rule Results
+## 1. Shipment DQ Rule Results
 
-| Rule ID | Rule Name | Severity | Failed Count | Business Impact |
-|---|---|---|---:|---|
-| DQ-01 | Required scan_id not null | High | [Enter result] | Records without a scan ID cannot be reliably tracked. |
-| DQ-02 | Duplicate scan_id check | High | [Enter result] | Duplicate scan events can distort shipment tracking and metrics. |
-| DQ-03 | Shipment numeric values not negative | Medium | [Enter result] | Invalid weight, package count, freight, or attempt values can affect operational and financial metrics. |
-| DQ-04 | Valid reference IDs | High | [Enter result] | Invalid hub, carrier, or route references can cause incorrect joins and reporting. |
-| DQ-05 | Valid shipment timestamp order | Medium | [Enter result] | Incorrect timestamps can affect delivery time and performance calculations. |
+The current Week 6 shipment framework evaluates **100,020** candidate shipment records.
 
----
+| Rule ID | Rule Name | Failed Count | Business Impact |
+|---|---|---:|---|
+| DQ-SHP-001 | Shipment identity | 32 | Missing or invalid identity fields can make shipment records unreliable or difficult to trace. |
+| DQ-REF-001 | Reference integrity | 34 | Invalid hub, carrier, or route references can produce incorrect joins and reporting. |
+| DQ-TIM-001 | Chronology | 30 | Incorrect timestamp relationships can distort delivery-duration and on-time metrics. |
+| DQ-SCN-001 | Scan sequence | 28 | Invalid scan sequencing can affect shipment-event tracking and event chronology. |
+| DQ-RTE-001 | Route consistency | 22 | Route/hub or route-attribute mismatches can misrepresent shipment routing. |
+| DQ-DEL-001 | Delivery/status consistency | 20 | Inconsistent delivery and status fields can affect shipment outcome reporting. |
+| DQ-MEA-001 | Measures | 10 | Invalid shipment measures can affect operational and financial metrics. |
+| DQ-EVT-001 | Event/schema | 0 | No failures were reported for this rule in the current execution. |
 
-## 2. Failed Record Examples
-
-Failed records were reviewed using the Data Quality Checks notebook.
-
-The notebook captures sample failed records for:
-
-- Missing scan IDs
-- Duplicate scan IDs
-- Invalid shipment numeric values
-- Invalid hub, carrier, or route references
-- Invalid shipment timestamp order
-
-The failed examples will be reviewed before Gold-level metrics are generated.
+> Rule failure counts are **rule-level counts**. A single shipment can fail more than one rule, so these counts do not sum to the number of quarantined records.
 
 ---
 
-## 3. Business Impact
+## 2. Candidate / Trusted / Quarantine Reconciliation
 
-Data quality issues can directly affect shipment visibility and dashboard accuracy.
+Current shipment execution:
 
-Missing or duplicate scan IDs can make shipment events difficult to track correctly.
+- Candidate distinct records: **100,020**
+- Trusted records: **99,857**
+- Quarantine records: **163**
+- Reconciliation difference: **0**
+- Reconciliation result: **PASS**
+- Trusted ∩ Quarantine overlap: **0**
 
-Invalid hub, carrier, or route references can lead to incorrect joins between Silver tables.
+Therefore:
 
-Negative or invalid shipment values can affect operational and financial calculations.
+`100,020 = 99,857 + 163`
 
-Incorrect timestamp ordering can affect delivery duration and on-time delivery metrics.
+The framework keeps failed records in quarantine rather than silently dropping them.
 
-Therefore, high-severity data quality failures should be investigated before the affected records are used for important Gold metrics.
+---
+
+## 3. Multi-Rule Failure Handling
+
+Quarantine uses one row per `source_record_id` and stores:
+
+- `failed_rule_ids` as an `ARRAY<STRING>`
+- `failure_details` as the corresponding rule explanations
+
+This allows a shipment that fails multiple checks to remain a single quarantine record while retaining all detected failures.
+
+Examples observed in the current execution include combinations such as:
+
+- `DQ-REF-001` + `DQ-RTE-001`
+- `DQ-SCN-001` + `DQ-MEA-001`
 
 ---
 
 ## 4. Handling of Failed Records
 
-Failed records are identified during the Data Quality Checks stage.
+Failed records are isolated into the quarantine output for review. The Silver source tables are not modified by the DQ evaluation.
 
-The team will review the failed records and decide whether they should be corrected, excluded, or flagged depending on the type of failure.
-
-No records are silently removed during the DQ checking stage.
+A later controlled-correction/replay step is required before Week 6 can be considered fully complete.
 
 ---
 
-## 5. Rules That Should Block or Flag Gold Metrics
+## 5. Business Impact
 
-The following rules should be treated as important before generating Gold metrics:
+The most important downstream risks are:
 
-- DQ-01 should be reviewed because missing scan IDs affect shipment tracking.
-- DQ-02 should be reviewed because duplicate events can inflate metrics.
-- DQ-04 should be reviewed because invalid references can affect joins.
-- DQ-05 should be reviewed because incorrect timestamps can affect delivery metrics.
+- Reference failures can cause incorrect joins between shipments and reference entities.
+- Timestamp failures can affect delivery-duration and on-time calculations.
+- Scan-sequence failures can affect event-level shipment tracking.
+- Route inconsistencies can affect route and hub performance reporting.
+- Measure failures can affect operational and financial aggregations.
 
-DQ-03 should also be reviewed before using shipment financial and operational measures.
+Gold metrics should consume trusted data rather than the full Silver shipment population.
 
 ---
 
-## 6. Overall Quality Summary
+## 6. Scope Notes
 
-The Silver data was checked using multiple data quality rules covering required fields, duplicates, numeric ranges, reference integrity, and timestamp ordering.
+The shipment DQ framework contains eight rule IDs. The current implementation includes expanded chronology, scan-sequence, and route-consistency checks.
 
-The checks are designed around the actual ShipTrack business data rather than only checking for null values.
+For scan events, a fixed `event_type` progression is not enforced because the available event types do not define a strict linear business progression in the current schema.
 
-Failed records are captured as examples so that the team can understand the cause and business impact of each issue.
-
-The results from the Databricks notebook will be used to complete the final failed counts in this document.
-
-The most important failures for downstream reporting are duplicate records, invalid references, and incorrect timestamps because they can directly affect shipment visibility and business metrics.
-
-The DQ results will be reviewed before proceeding to Gold-level aggregations.
+Other-entity DQ checks and controlled correction/replay are separate Week 6 work items and should only be marked complete after their execution evidence is captured.
