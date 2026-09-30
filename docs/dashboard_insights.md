@@ -80,8 +80,8 @@ These observations describe what the available Gold data can support. They do no
 - [x] Gold table grains are documented.
 - [x] Verified Gold row counts are recorded.
 - [x] Dashboard-to-Gold ownership is documented.
-- [ ] Every final dashboard KPI has a recorded same-filter reconciliation result.
-- [ ] Week 09 refinement screenshots are added when genuine final evidence is available.
+- [x] Every final dashboard KPI has a recorded same-filter reconciliation result.
+- [x] Week 09 refinement screenshots are added when genuine final evidence is available.
 
 ## 6. Limitations
 
