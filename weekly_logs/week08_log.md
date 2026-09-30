@@ -1,7 +1,7 @@
 # Week 08 Log — Power BI Dashboard Draft
 
 **Week:** 8  
-**Date range:** 25 September 2026  
+**Date:** September 2026  
 **Team:** 10  
 **Project:** ShipTrack — Supply Chain Visibility Hub
 
@@ -9,71 +9,63 @@
 
 ## 1. Sprint Goal
 
-The goal for Week 08 was to begin the reporting/dashboard layer using the Week 07 Gold outputs and create the first Power BI dashboard draft.
-
-The repository should contain the dashboard file and supporting documentation while keeping the downstream flow based on Gold data.
-
----
+The goal for Week 08 was to hand the approved Gold outputs to Power BI and create the first working dashboard while preserving the Gold-only reporting boundary.
 
 ## 2. Work Completed
 
 | Task | Owner | Status | Evidence |
 |---|---|---|---|
-| Prepared the Week 07 Gold layer for dashboard use | Team 10 | Done | `docs/gold_metrics_definition.md`, Gold aggregation work |
-| Added the Power BI dashboard file to the repository | Team 10 | Done | `dashboard/Team10-PowerBI-Report.pbix` |
-| Maintained the dashboard folder structure and usage guidance | Team 10 | Done | `dashboard/README.md` |
-| Added the dashboard-insights documentation template | Team 10 | In progress | `docs/dashboard_insights.md` |
-| Added final Week 08 dashboard screenshots | Team 10 | Not yet verified | `screenshots/` |
-| Completed dashboard insight write-up and KPI validation | Team 10 | In progress | `docs/dashboard_insights.md` |
-
-The Power BI file is present in GitHub as `dashboard/Team10-PowerBI-Report.pbix`. The repository dashboard guidance states that Power BI should use Gold outputs and that dashboard screenshots and insights must also be documented.
-
----
+| Prepared Week 07 Gold outputs for reporting | Team 10 | Done | Gold aggregation work |
+| Added Power BI dashboard artifact | Team 10 | Done | `dashboard/Team10-PowerBI-Report.pbix` |
+| Updated dashboard folder guidance | Team 10 | Done | `dashboard/README.md` |
+| Added Gold sample/export files used for reporting support | Team 10 | Done | `data_sample/gold_exports/` |
+| Added dashboard screenshots | Team 10 | Done | `screenshots/` |
+| Created dashboard insight documentation | Team 10 | Done | `docs/dashboard_insights.md` |
 
 ## 3. Key Decisions
 
 - Continue the **Trusted Silver → Gold → Power BI** flow established in Weeks 06–07.
-- Use the implemented Gold tables as the reporting layer rather than connecting Power BI directly to raw source files.
-- Keep the PBIX file in the `dashboard/` folder as the current Week 08 dashboard artifact.
-- Treat dashboard screenshots, KPI reconciliation, and written insights as remaining evidence work rather than marking them complete without verification.
+- Use the approved Gold tables as the reporting layer rather than connecting Power BI directly to raw or Silver detail data.
+- Keep the working PBIX under `dashboard/` as the Week 08 dashboard artifact.
+- Carry the same dashboard into Week 09 for refinement instead of rebuilding it from scratch.
 
----
+## 4. Dashboard Inputs
 
-## 4. Blockers / Risks
+The reporting layer uses:
 
-| Blocker / Risk | Impact | Help Needed |
-|---|---|---|
-| Dashboard screenshots are not yet confirmed as complete Week 08 evidence | The dashboard cannot yet be fully demonstrated from GitHub evidence | Capture and upload final dashboard screenshots |
-| `docs/dashboard_insights.md` still contains placeholders | Dashboard story and insights are not fully documented | Replace placeholders with verified observations from the actual dashboard |
-| PBIX internals cannot be validated from the GitHub connector because `.pbix` is a binary file | Connection details and visual configuration cannot be independently confirmed here | Verify the Power BI model manually in Power BI Desktop |
-| Gold export evidence is not currently represented by populated files under `data_sample/gold_exports/` | Reproducibility of the dashboard input data is not fully demonstrated in GitHub | Add the approved small Gold sample/export evidence if required by the project rules |
+- `gold_shipment_daily_metrics`
+- `gold_carrier_metrics`
+- `gold_route_metrics`
+- `gold_hub_metrics`
 
----
+The current verified Gold row counts are 180, 9, 100 and 13 respectively.
 
 ## 5. Evidence Added to GitHub
 
-- `dashboard/Team10-PowerBI-Report.pbix` — Power BI dashboard artifact added.
-- `dashboard/README.md` — dashboard storage and validation guidance.
-- `docs/dashboard_insights.md` — dashboard documentation template.
-- Week 07 Gold documentation and aggregation work remain available as the upstream reporting evidence.
-
----
+- `dashboard/Team10-PowerBI-Report.pbix`
+- `dashboard/README.md`
+- `data_sample/gold_exports/`
+- dashboard screenshots under `screenshots/`
+- `docs/dashboard_insights.md`
 
 ## 6. AI Transparency Note
 
 | Question | Response |
 |---|---|
-| **Where AI helped** | AI was used to review the repository state, identify completed Week 08 artifacts, and structure the weekly progress documentation. |
-| **What we changed after AI suggestion** | The log was updated to distinguish verified repository evidence from work that still requires manual confirmation. |
-| **What we verified manually** | The GitHub repository contains the Week 08 PBIX artifact, dashboard README, and dashboard-insights document. The PBIX itself was not inspected internally because it is a binary file. |
-| **What we can explain without AI** | We can explain the Gold-to-dashboard flow, the purpose of the Power BI artifact, and the remaining screenshot/insight validation work. |
+| **Where AI helped** | AI assisted with repository review, documentation structure and checking that the dashboard documentation followed the Week 08 requirements. |
+| **What we changed after AI suggestion** | Documentation was adapted to the actual ShipTrack Gold tables, PBIX filename and repository evidence. |
+| **What we verified manually** | The repository contains the PBIX artifact, Gold export files, dashboard documentation and screenshots. |
+| **What we can explain without AI** | The team can explain the Gold-to-Power-BI flow, Gold table purposes and the dashboard reporting scope. |
 
----
+## 7. Blockers / Risks
 
-## 7. Next Week Preparation
+- PBIX internals are binary and cannot be reviewed as ordinary Markdown/source content through GitHub.
+- Final KPI reconciliation must use the same filter state as the Power BI visual and the owning Gold table.
+- Week 09 refinement should not introduce unsafe relationships or bypass the Gold-only source rule.
 
-- Open the PBIX in Power BI Desktop and verify that all visuals use the intended Gold outputs.
-- Validate KPI totals against the implemented Gold tables.
-- Capture clear dashboard screenshots for GitHub evidence.
-- Replace the placeholders in `docs/dashboard_insights.md` with verified dashboard observations.
-- Prepare the Week 09 dashboard-refinement log only after the Week 08 evidence is complete.
+## 8. Next Week Preparation
+
+- Refine the existing Power BI dashboard.
+- Check visual hierarchy, labels, formatting and filter behaviour.
+- Reconcile important dashboard values to their owning Gold tables.
+- Document evidence-backed observations and limitations in `docs/dashboard_insights.md`.

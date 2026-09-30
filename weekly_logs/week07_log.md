@@ -2,32 +2,25 @@
 
 **Week:** 7  
 **Team:** 10  
-**Project:** ShipTrack  
+**Project:** ShipTrack — Supply Chain Visibility Hub
 
 ---
 
 ## 1. Sprint Goal
 
-The goal for Week 07 was to develop and validate the **Gold layer** of the ShipTrack data pipeline using the Trusted Silver shipment data produced by the Week 06 data-quality framework.
-
-The Gold layer converts trusted shipment records into business-ready aggregated datasets for reporting and analytics.
-
----
+The goal for Week 07 was to develop and validate the Gold layer using the Trusted shipment data produced by the Week 06 data-quality process. The Gold layer converts trusted shipment records into business-ready aggregates for reporting and analytics.
 
 ## 2. Work Completed
 
-| Task | Status | Evidence |
-|---|---|---|
-| Developed daily shipment Gold metrics | Done | Gold aggregation notebook |
-| Developed carrier-level Gold metrics | Done | Gold aggregation notebook |
-| Developed route-level Gold metrics | Done | Gold aggregation notebook |
-| Developed hub-level Gold metrics | Done | Gold aggregation notebook |
-| Configured Gold transformations to use `trusted_shipments` | Done | Gold SQL / notebook |
-| Validated Gold outputs and row counts | Done | Gold validation output |
-| Documented Gold metrics and data flow | Done | `docs/gold_metrics_definition.md` |
-| Updated project documentation in GitHub | Done | GitHub repository |
-
----
+| Task | Owner | Status | Evidence |
+|---|---|---|---|
+| Developed daily shipment Gold metrics | Team 10 | Done | Gold aggregation notebook |
+| Developed carrier-level Gold metrics | Team 10 | Done | Gold aggregation notebook |
+| Developed route-level Gold metrics | Team 10 | Done | Gold aggregation notebook |
+| Developed hub-level Gold metrics | Team 10 | Done | Gold aggregation notebook |
+| Used `trusted_shipments` as the Gold source | Team 10 | Done | Gold SQL / notebook |
+| Validated Gold outputs and aggregation grains | Team 10 | Done | Gold validation output |
+| Updated `docs/gold_metrics_definition.md` | Team 10 | Done | GitHub |
 
 ## 3. Implemented Gold Tables
 
@@ -38,41 +31,25 @@ The Gold layer converts trusted shipment records into business-ready aggregated 
 | `gold_route_metrics` | One row per route | 100 |
 | `gold_hub_metrics` | One row per hub | 13 |
 
-The Gold layer uses `trusted_shipments` as its shipment source. This preserves the Week 06 isolation between trusted and quarantined records.
+The Gold layer uses `trusted_shipments` as the shipment source, preserving the Week 06 Trusted-versus-Quarantine separation.
 
----
+## 4. Key Decisions
 
-## 4. Key Metrics
-
-The Gold layer supports business metrics including:
-
-- Shipment volume
-- Delivered shipments
-- Delayed deliveries
-- Delivery rate
-- On-time delivery rate
-- Average delivery hours
-- Total freight
-- Hub flow counts
-
-The exact SQL expressions and output columns are defined by the Gold aggregation notebook.
-
----
+- Gold reporting datasets are built from Trusted shipment data.
+- Each Gold table keeps its own reporting grain.
+- The four Gold tables are used as downstream reporting sources rather than rebuilding upstream transformations in Power BI.
+- The Gold metric definitions document the intended business use of each table.
 
 ## 5. Validation
 
-The completed Gold outputs were checked for successful table creation and expected aggregation grain.
-
-Current verified row counts:
+The completed Gold outputs were checked for successful creation, expected aggregation grain and current row counts:
 
 - `gold_shipment_daily_metrics`: 180
 - `gold_carrier_metrics`: 9
 - `gold_route_metrics`: 100
 - `gold_hub_metrics`: 13
 
-The Gold layer is intended to be the downstream source for Week 08 dashboard/reporting work.
-
----
+These counts represent the executed Week 07 dataset and can change if the Trusted input data changes.
 
 ## 6. Data Flow
 
@@ -93,33 +70,27 @@ Gold Aggregations
    ├── Route Metrics
    └── Hub Metrics
    ↓
-Dashboard / Reporting
+Power BI / Reporting
 ```
-
----
 
 ## 7. Blockers / Risks
 
-- Gold metrics depend on the current Trusted Silver dataset and may change if the upstream DQ results change.
-- Dashboard development is a downstream Week 08 activity.
-- Gold metric definitions should remain synchronized with the implemented notebook columns and SQL logic.
-
----
+- Gold metrics depend on the current Trusted Silver dataset.
+- Any upstream DQ or schema change may affect downstream Gold outputs.
+- Gold metric definitions must remain aligned with the implemented notebook columns and SQL logic.
 
 ## 8. AI Transparency Note
 
 | Question | Response |
 |---|---|
-| **Where AI helped** | AI assisted with drafting Gold aggregation logic and documentation structure. |
-| **What we changed after AI suggestion** | The implementation was aligned with the actual ShipTrack Silver schema, Trusted shipment data, and project requirements. |
-| **What we verified manually** | Gold table sources, aggregation outputs, row counts, and metric definitions were checked against the implemented notebook and Databricks results. |
-| **What we can explain without AI** | We can explain the Silver-to-Trusted-to-Gold flow, aggregation grains, business metrics, and validation process. |
-
----
+| **Where AI helped** | AI assisted with aggregation-logic review and documentation structure. |
+| **What we changed after AI suggestion** | The implementation and documentation were aligned with the actual ShipTrack schema, Trusted shipment source and project requirements. |
+| **What we verified manually** | Gold sources, aggregation grains, output row counts and metric definitions were checked against the implemented work. |
+| **What we can explain without AI** | The team can explain the Trusted-to-Gold flow, aggregation grains, business metrics and validation process. |
 
 ## 9. Next Week Preparation
 
-- Connect the Gold outputs to the reporting/dashboard layer.
-- Build required Week 08 visuals using Gold tables.
+- Prepare the approved Gold outputs for Power BI.
+- Create the first Gold-only dashboard/reporting layer.
 - Preserve the Trusted → Gold data flow.
-- Capture final Gold validation evidence for project submission.
+- Capture dashboard and Gold hand-off evidence.
