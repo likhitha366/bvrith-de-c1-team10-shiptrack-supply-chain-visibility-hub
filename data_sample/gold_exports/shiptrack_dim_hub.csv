@@ -1,0 +1,15 @@
+hub_id,hub_name,city,region,hub_type,capacity_band,active_status
+H001,Deccan Gateway Hub,Hyderabad,South,GATEWAY,HIGH,ACTIVE
+H002,Cauvery North Hub,Bengaluru,South,REGIONAL,HIGH,ACTIVE
+H003,Coromandel Transit Hub,Chennai,South,REGIONAL,HIGH,ACTIVE
+H004,Konkan Gateway Hub,Mumbai,West,GATEWAY,HIGH,ACTIVE
+H005,Sabarmati Regional Hub,Ahmedabad,West,REGIONAL,MEDIUM,ACTIVE
+H006,Yamuna Gateway Hub,Delhi,North,GATEWAY,HIGH,ACTIVE
+H007,Ganga Regional Hub,Lucknow,North,REGIONAL,MEDIUM,ACTIVE
+H008,Hooghly Gateway Hub,Kolkata,East,GATEWAY,HIGH,ACTIVE
+H009,Kalinga Regional Hub,Bhubaneswar,East,REGIONAL,MEDIUM,ACTIVE
+H010,Narmada Transit Hub,Indore,Central,TRANSIT,MEDIUM,ACTIVE
+H011,Godavari Regional Hub,Vijayawada,South,REGIONAL,MEDIUM,ACTIVE
+H012,Mula-Mutha Last Mile Hub,Pune,West,LAST_MILE,MEDIUM,ACTIVE
+H013,Aravalli Transit Hub,Jaipur,North,TRANSIT,MEDIUM,ACTIVE
+H014,Legacy Training Hub,Nagpur,Central,TRANSIT,LOW,INACTIVE
