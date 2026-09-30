@@ -2,7 +2,7 @@
 
 **Week:** 7  
 **Project:** ShipTrack  
-**Purpose:** Define the business-ready Gold tables, grains, and KPI calculations used for downstream reporting and analytics.
+**Purpose:** Define the business-ready Gold tables, their grains, sources, and KPI usage for downstream reporting.
 
 ---
 
@@ -12,155 +12,92 @@
 |---|---|---|---|
 | `gold_shipment_daily_metrics` | One row per booking date | `trusted_shipments` | Daily shipment volume and delivery-performance metrics |
 | `gold_carrier_metrics` | One row per carrier | `trusted_shipments` | Carrier-level shipment and delivery performance |
-| `gold_route_metrics` | One row per route | `trusted_shipments` | Route-level shipment and delivery performance |
+| `gold_route_metrics` | One row per route | `trusted_shipments` | Route-level delivery performance |
 | `gold_hub_metrics` | One row per hub | `trusted_shipments` | Hub-level shipment flow and delivery performance |
 
-Gold is built from **Trusted Silver** so that records that failed the Week 06 shipment DQ framework are not included in downstream analytics.
+All Gold outputs are downstream of the Trusted shipment data produced by the Week 06 data-quality process.
 
----
-
-## 2. Gold Table Details
-
-### 2.1 `gold_shipment_daily_metrics`
-
-**Grain:** One row per booking date.
-
-**Purpose:** Daily shipment activity and delivery-performance trends.
-
-**Used for:**
-- Shipment volume trends
-- Delivery-rate trends
-- On-time delivery trends
-- Daily delayed-delivery analysis
-
-### 2.2 `gold_carrier_metrics`
-
-**Grain:** One row per carrier.
-
-**Purpose:** Measure carrier-level shipment and delivery performance.
-
-**Used for:**
-- Shipment volume by carrier
-- Average delivery time
-- On-time delivery rate
-- Delayed deliveries
-- Freight metrics
-
-### 2.3 `gold_route_metrics`
-
-**Grain:** One row per route.
-
-**Purpose:** Measure route-level delivery performance and identify routes with delayed deliveries.
-
-**Used for:**
-- Shipment volume by route
-- Average delivery time
-- On-time delivery rate
-- Delayed deliveries
-
-### 2.4 `gold_hub_metrics`
-
-**Grain:** One row per hub.
-
-**Purpose:** Measure shipment flow and delivery activity by hub.
-
-**Used for:**
-- Shipment volume by hub
-- Hub flow analysis
-- Delivery performance by hub
-
----
-
-## 3. KPI Definitions
-
-The exact columns produced by the Gold notebook are the source of truth for the implemented metrics. The following business metrics are represented in the Gold layer where applicable:
+## 2. KPI Definitions
 
 | KPI | Definition |
 |---|---|
-| Total shipments | Count of trusted shipment records included in the relevant aggregation |
-| Delivered shipments | Shipment records with a completed delivery outcome/status according to the Gold transformation logic |
-| Delayed deliveries | Shipment records classified as delayed according to the Gold transformation logic |
-| Delivery rate | Delivered shipments divided by total shipments × 100 |
-| On-time delivery rate | On-time delivered shipments divided by eligible delivered shipments × 100, according to the Gold transformation logic |
-| Average delivery hours | Average elapsed time between the applicable shipment timestamps used by the Gold transformation |
+| Total shipments | Count of trusted shipment records included in the relevant Gold aggregation |
+| Delivered shipments | Shipment records with a completed delivery outcome/status according to the implemented Gold logic |
+| Delayed deliveries | Shipment records classified as delayed according to the implemented Gold logic |
+| Delivery rate | Delivered shipments / total shipments × 100 |
+| On-time delivery rate | On-time delivered shipments / eligible delivered shipments × 100, according to the implemented Gold logic |
+| Average delivery hours | Average elapsed delivery time using the timestamps implemented in the Gold transformation |
 | Total freight | Aggregated freight amount from trusted shipment records |
-| Hub flow counts | Shipment/event flow counts aggregated by hub |
+| Hub flow counts | Shipment flow counts aggregated by hub |
 
-The Gold notebook is the authoritative source for the implemented SQL expressions and column names.
+The Gold aggregation notebook remains the source of truth for the exact SQL expressions and output columns.
 
----
+## 3. Implemented Gold Outputs
 
-## 4. Validation
+### `gold_shipment_daily_metrics`
 
-Before downstream reporting, validate that:
+**Grain:** One row per booking date.  
+**Purpose:** Daily shipment volume and delivery-performance trends.
 
-- Gold tables are created successfully.
-- Gold tables read from `trusted_shipments`, not `silver_shipments` directly.
-- Gold row counts are consistent with the intended aggregation grain.
-- KPI percentages remain within logical 0–100% bounds.
-- Aggregations do not introduce duplicate rows at their declared grain.
-- Trusted-only filtering is preserved.
-- Gold outputs can be consumed by the dashboard/reporting layer.
+### `gold_carrier_metrics`
 
----
+**Grain:** One row per carrier.  
+**Purpose:** Carrier shipment volume, delivery performance, timing and freight analysis.
 
-## 5. Verified Week 07 Outputs
+### `gold_route_metrics`
 
-The completed Week 07 implementation produced the following Gold table row counts:
+**Grain:** One row per route.  
+**Purpose:** Route shipment volume and delivery-performance analysis.
 
-| Gold table | Verified rows |
+### `gold_hub_metrics`
+
+**Grain:** One row per hub.  
+**Purpose:** Hub shipment flow and delivery-performance analysis.
+
+## 4. Verified Week 07 Outputs
+
+| Gold Table | Verified Rows |
 |---|---:|
 | `gold_shipment_daily_metrics` | 180 |
 | `gold_carrier_metrics` | 9 |
 | `gold_route_metrics` | 100 |
 | `gold_hub_metrics` | 13 |
 
-These counts describe the current executed outputs and may change if the Trusted input data changes.
+These counts describe the executed Week 07 outputs and may change if the upstream Trusted dataset changes.
 
----
+## 5. Validation Requirements
+
+- Gold tables are created successfully.
+- Gold tables use the Trusted shipment data rather than raw or untrusted Silver data.
+- Output row counts match the declared aggregation grain.
+- KPI percentages remain within logical bounds.
+- Aggregations do not introduce duplicate rows at their declared grain.
+- Downstream Power BI reporting consumes Gold outputs only.
 
 ## 6. Data Flow
 
 ```text
 Raw Data
-   |
-   v
+   ↓
 Bronze
-   |
-   v
+   ↓
 Silver
-   |
-   v
+   ↓
 Week 06 DQ Evaluation
-   |
-   +------------------+
-   |                  |
-   v                  v
-Trusted            Quarantine
-Silver
-   |
-   v
+   ↓
+Trusted Silver
+   ↓
 Gold Aggregations
-   |
-   +------------------------------+
-   |              |               |
-   v              v               v
-Daily Metrics   Carrier         Route/Hub
-                Metrics         Metrics
-   |
-   +--------------+--------------+
-                  |
-                  v
-             Reporting /
-             Dashboard
+   ├── Daily Shipment Metrics
+   ├── Carrier Metrics
+   ├── Route Metrics
+   └── Hub Metrics
+   ↓
+Power BI / Reporting
 ```
-
----
 
 ## 7. Downstream Use
 
-The Gold tables are intended for Week 08 reporting/dashboard work. Downstream reporting should consume these Gold outputs rather than Bronze or untrusted Silver data.
+The Gold outputs are the approved reporting layer used for the Week 08 Power BI dashboard and the Week 09 dashboard refinement and insight work. Power BI should not bypass Gold by connecting directly to raw or Silver detail data.
 
----
-
-**Status:** Week 07 Gold metric definitions updated to match the implemented Gold layer.
+**Status:** Week 07 Gold metric definitions documented and carried forward through Week 09 reporting work.
