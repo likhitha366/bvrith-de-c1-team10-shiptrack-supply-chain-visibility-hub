@@ -1,0 +1,11 @@
+carrier_id,carrier_name,transport_mode,primary_service_level,active_status
+C001,Aster Freight,ROAD,STANDARD,ACTIVE
+C002,BlueArc Logistics,ROAD,EXPRESS,ACTIVE
+C003,Cobalt Cargo,AIR,PRIORITY,ACTIVE
+C004,DeltaLine Transport,RAIL,STANDARD,ACTIVE
+C005,EmberRoute Express,AIR,EXPRESS,ACTIVE
+C006,Falcon Surface,ROAD,PRIORITY,ACTIVE
+C007,GreenSpan Carriers,ROAD,STANDARD,ACTIVE
+C008,HarborLink Cargo,RAIL,EXPRESS,ACTIVE
+C009,IndigoTrail Logistics,AIR,STANDARD,ACTIVE
+C010,Legacy Carrier,ROAD,STANDARD,INACTIVE

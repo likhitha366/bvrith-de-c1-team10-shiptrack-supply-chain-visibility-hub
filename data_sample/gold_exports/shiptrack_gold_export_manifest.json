@@ -1,0 +1,487 @@
+{
+  "project": "P10 ShipTrack",
+  "notebook": "notebooks/06_powerbi_export.ipynb",
+  "generated_at_utc": "2026-09-30T09:59:03Z",
+  "week_scope": [
+    "P1"
+  ],
+  "export_root": "/Volumes/workspace/default/shiptrack_exports/gold_exports",
+  "csv_format": {
+    "encoding": "UTF-8",
+    "header": true,
+    "delimiter": ",",
+    "date_format": "yyyy-MM-dd",
+    "timestamp_format": "yyyy-MM-dd'T'HH:mm:ss.SSSSSS",
+    "timezone": "UTC",
+    "null": "empty field"
+  },
+  "tables": [
+    {
+      "gold_object": "fact_shipment",
+      "gold_table": "gold_fact_shipment",
+      "gold_delta_version": 1,
+      "grain": [
+        "shipment_id"
+      ],
+      "power_bi_table": "Gold_FactShipment",
+      "file": "shiptrack_fact_shipment.csv",
+      "rows": 99857,
+      "fingerprint": "-315623457203631465364",
+      "size_bytes": 15883444,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "shipment_id",
+          "type": "string"
+        },
+        {
+          "name": "route_id",
+          "type": "string"
+        },
+        {
+          "name": "origin_hub_id",
+          "type": "string"
+        },
+        {
+          "name": "destination_hub_id",
+          "type": "string"
+        },
+        {
+          "name": "carrier_id",
+          "type": "string"
+        },
+        {
+          "name": "service_level",
+          "type": "string"
+        },
+        {
+          "name": "transport_mode",
+          "type": "string"
+        },
+        {
+          "name": "latest_status",
+          "type": "string"
+        },
+        {
+          "name": "delivery_outcome",
+          "type": "string"
+        },
+        {
+          "name": "booking_date",
+          "type": "date"
+        },
+        {
+          "name": "delivery_date",
+          "type": "date"
+        },
+        {
+          "name": "promised_delivery_ts",
+          "type": "timestamp"
+        },
+        {
+          "name": "actual_delivery_ts",
+          "type": "timestamp"
+        },
+        {
+          "name": "return_completed_ts",
+          "type": "timestamp"
+        },
+        {
+          "name": "attempt_count",
+          "type": "int"
+        },
+        {
+          "name": "delivered_flag",
+          "type": "int"
+        },
+        {
+          "name": "on_time_flag",
+          "type": "int"
+        },
+        {
+          "name": "first_attempt_success_flag",
+          "type": "int"
+        },
+        {
+          "name": "exception_flag",
+          "type": "boolean"
+        },
+        {
+          "name": "delivery_delay_minutes",
+          "type": "bigint"
+        },
+        {
+          "name": "transit_hours",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "gold_object": "fact_shipment_exception",
+      "gold_table": "gold_fact_shipment_exception",
+      "gold_delta_version": 1,
+      "grain": [
+        "exception_id"
+      ],
+      "power_bi_table": "Gold_FactShipmentException",
+      "file": "shiptrack_fact_shipment_exception.csv",
+      "rows": 18306,
+      "fingerprint": "-558424810078223551901",
+      "size_bytes": 1182792,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "exception_id",
+          "type": "string"
+        },
+        {
+          "name": "shipment_id",
+          "type": "string"
+        },
+        {
+          "name": "exception_type",
+          "type": "string"
+        },
+        {
+          "name": "exception_date",
+          "type": "date"
+        },
+        {
+          "name": "severity",
+          "type": "string"
+        },
+        {
+          "name": "resolution_status",
+          "type": "string"
+        },
+        {
+          "name": "hub_id",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "gold_object": "shipment_delay_summary",
+      "gold_table": "gold_shipment_delay_summary",
+      "gold_delta_version": 1,
+      "grain": [
+        "delivery_date",
+        "route_id",
+        "carrier_id",
+        "service_level",
+        "delay_band"
+      ],
+      "power_bi_table": "Gold_ShipmentDelaySummary",
+      "file": "shiptrack_shipment_delay_summary.csv",
+      "rows": 52381,
+      "fingerprint": "-675080913138855644859",
+      "size_bytes": 2334180,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "delivery_date",
+          "type": "date"
+        },
+        {
+          "name": "route_id",
+          "type": "string"
+        },
+        {
+          "name": "carrier_id",
+          "type": "string"
+        },
+        {
+          "name": "service_level",
+          "type": "string"
+        },
+        {
+          "name": "delay_band",
+          "type": "string"
+        },
+        {
+          "name": "shipment_count",
+          "type": "bigint"
+        },
+        {
+          "name": "avg_delay_minutes_late_only",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "gold_object": "shipment_status_exception_summary",
+      "gold_table": "gold_shipment_status_exception_summary",
+      "gold_delta_version": 1,
+      "grain": [
+        "snapshot_date",
+        "latest_status",
+        "ageing_band",
+        "exception_type"
+      ],
+      "power_bi_table": "Gold_StatusExceptionSummary",
+      "file": "shiptrack_shipment_status_exception_summary.csv",
+      "rows": 47,
+      "fingerprint": "-24559143144810902156",
+      "size_bytes": 2388,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "snapshot_date",
+          "type": "date"
+        },
+        {
+          "name": "latest_status",
+          "type": "string"
+        },
+        {
+          "name": "ageing_band",
+          "type": "string"
+        },
+        {
+          "name": "exception_type",
+          "type": "string"
+        },
+        {
+          "name": "shipment_count",
+          "type": "bigint"
+        }
+      ]
+    },
+    {
+      "gold_object": "dim_date",
+      "gold_table": "gold_dim_date",
+      "gold_delta_version": 0,
+      "grain": [
+        "calendar_date"
+      ],
+      "power_bi_table": "Gold_DimDate",
+      "file": "shiptrack_dim_date.csv",
+      "rows": 365,
+      "fingerprint": "172139655355138350440",
+      "size_bytes": 17755,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "calendar_date",
+          "type": "date"
+        },
+        {
+          "name": "year",
+          "type": "int"
+        },
+        {
+          "name": "month_num",
+          "type": "int"
+        },
+        {
+          "name": "month_name",
+          "type": "string"
+        },
+        {
+          "name": "year_month",
+          "type": "string"
+        },
+        {
+          "name": "week_of_year",
+          "type": "int"
+        },
+        {
+          "name": "day_of_week",
+          "type": "int"
+        },
+        {
+          "name": "day_name",
+          "type": "string"
+        },
+        {
+          "name": "is_weekend",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "gold_object": "dim_hub",
+      "gold_table": "gold_dim_hub",
+      "gold_delta_version": 0,
+      "grain": [
+        "hub_id"
+      ],
+      "power_bi_table": "Gold_DimOriginHub / Gold_DimDestinationHub",
+      "file": "shiptrack_dim_hub.csv",
+      "rows": 14,
+      "fingerprint": "-14160942701882887468",
+      "size_bytes": 926,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "hub_id",
+          "type": "string"
+        },
+        {
+          "name": "hub_name",
+          "type": "string"
+        },
+        {
+          "name": "city",
+          "type": "string"
+        },
+        {
+          "name": "region",
+          "type": "string"
+        },
+        {
+          "name": "hub_type",
+          "type": "string"
+        },
+        {
+          "name": "capacity_band",
+          "type": "string"
+        },
+        {
+          "name": "active_status",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "gold_object": "dim_carrier",
+      "gold_table": "gold_dim_carrier",
+      "gold_delta_version": 0,
+      "grain": [
+        "carrier_id"
+      ],
+      "power_bi_table": "Gold_DimCarrier",
+      "file": "shiptrack_dim_carrier.csv",
+      "rows": 10,
+      "fingerprint": "-1108034669849944967",
+      "size_bytes": 503,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "carrier_id",
+          "type": "string"
+        },
+        {
+          "name": "carrier_name",
+          "type": "string"
+        },
+        {
+          "name": "transport_mode",
+          "type": "string"
+        },
+        {
+          "name": "primary_service_level",
+          "type": "string"
+        },
+        {
+          "name": "active_status",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "gold_object": "dim_route",
+      "gold_table": "gold_dim_route",
+      "gold_delta_version": 0,
+      "grain": [
+        "route_id"
+      ],
+      "power_bi_table": "Gold_DimRoute",
+      "file": "shiptrack_dim_route.csv",
+      "rows": 103,
+      "fingerprint": "81613686893462400057",
+      "size_bytes": 7025,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "route_id",
+          "type": "string"
+        },
+        {
+          "name": "origin_hub_id",
+          "type": "string"
+        },
+        {
+          "name": "destination_hub_id",
+          "type": "string"
+        },
+        {
+          "name": "lane_label",
+          "type": "string"
+        },
+        {
+          "name": "service_level",
+          "type": "string"
+        },
+        {
+          "name": "transport_mode",
+          "type": "string"
+        },
+        {
+          "name": "distance_km",
+          "type": "double"
+        },
+        {
+          "name": "expected_transit_hours",
+          "type": "double"
+        },
+        {
+          "name": "route_band",
+          "type": "string"
+        },
+        {
+          "name": "active_status",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "gold_object": "dim_service_level",
+      "gold_table": "gold_dim_service_level",
+      "gold_delta_version": 0,
+      "grain": [
+        "service_level"
+      ],
+      "power_bi_table": "Gold_DimServiceLevel",
+      "file": "shiptrack_dim_service_level.csv",
+      "rows": 3,
+      "fingerprint": "-1604046384242242167",
+      "size_bytes": 65,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "service_level",
+          "type": "string"
+        },
+        {
+          "name": "service_level_sort",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "gold_object": "dim_status",
+      "gold_table": "gold_dim_status",
+      "gold_delta_version": 0,
+      "grain": [
+        "status_code"
+      ],
+      "power_bi_table": "Gold_DimStatus",
+      "file": "shiptrack_dim_status.csv",
+      "rows": 6,
+      "fingerprint": "-10528520861345172823",
+      "size_bytes": 153,
+      "commit_to_repo": true,
+      "columns": [
+        {
+          "name": "status_code",
+          "type": "string"
+        },
+        {
+          "name": "status_group",
+          "type": "string"
+        }
+      ]
+    }
+  ]
+}
