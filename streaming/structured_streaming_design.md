@@ -60,9 +60,11 @@ The watermark is calculated in SQL instead of with a stateful stream operator. R
 | `silver_candidate_scan_events` | one Bronze line (`source_record_id`) | typed and standardised, nothing filtered |
 | `stream_scan_event_dq_results` | one Candidate row | every rule flag, `failed_rule_list`, reason, severity |
 | `trusted_silver_scan_events` | one passed event | Gold-eligible events |
-| `quarantine_scan_events` | one failed event | all failed rules, raw payload, lineage, `rework_status` |
+| `quarantine_scan_event_stream` | one failed event | all failed rules, raw payload, lineage, `rework_status` |
 | `gold_fact_scan_event` | one trusted streaming event (`event_id`) | live feed for reporting |
 | `bronze_shiptrack_live_scan_events` | one live event | output of the continuous pipeline |
+
+Naming note: the Week-6 batch scan tables are already called `trusted_scan_events` and `quarantine_scan_events`. The stream quarantine table is therefore named `quarantine_scan_event_stream` so that the Week-10 notebook can never overwrite Week-6 results.
 
 Rules applied to streamed events: `DQ-EVT-001`, `DQ-REF-001`, `DQ-SCN-001`, `DQ-TIM-001`, `DQ-DEL-001`.
 

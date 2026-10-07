@@ -31,7 +31,7 @@ Show ShipTrack scan events arriving over time using two patterns: incremental JS
 
 - Two examples are used because file arrival and live event arrival show different sides of data in motion.
 - Auto Loader reads each file line by line so that Bronze keeps every physical line, including the malformed one. Bronze does not deduplicate or repair.
-- The exact playbook table names are used: `bronze_scan_event_stream`, `silver_candidate_scan_events`, `trusted_silver_scan_events`, `quarantine_scan_events`, `gold_fact_scan_event`.
+- Stream tables: `bronze_scan_event_stream`, `silver_candidate_scan_events`, `trusted_silver_scan_events`, `quarantine_scan_event_stream`, `gold_fact_scan_event`. The quarantine table is not called `quarantine_scan_events` because that name already holds the Week-6 batch scan quarantine.
 - `event_id` is the deduplication key: the first arrival is trusted and the replay is quarantined with its reason. For a sequence conflict both rows fail, because there is no approved winner.
 - The 24-hour watermark is calculated in SQL and stored as `watermark_status` and `is_late`, so a late event is visible instead of being silently dropped.
 - Trigger `availableNow` is used because Databricks Free Edition runs on serverless compute.
@@ -44,7 +44,7 @@ Show ShipTrack scan events arriving over time using two patterns: incremental JS
 | Blocker | Impact | Help Needed |
 |---|---|---|
 | All five drop files have the same name (`scan_event.json`) | They cannot be uploaded into one folder | Solved in the notebook: `find_drop()` accepts the pack folder layout or files renamed to the drop name |
-| Reference tables for hubs, carriers and routes may not exist with the `trusted_silver_` prefix | Stream reference checks would use Silver instead of Trusted | Notebook section 10 prints which table is used; mentor to confirm if a Silver fallback is acceptable |
+| Week-6 Trusted tables are named `trusted_*` (not `trusted_silver_*`) | The stream reference checks must find them | Notebook section 10 accepts both names and prints the table used for each reference |
 | The continuous pipeline must be created in the Databricks UI | If it is set to Triggered, live Bronze will not keep updating | Use Serverless ON and Pipeline mode Continuous (notebook section 18) |
 
 ---

@@ -35,11 +35,11 @@
     { "name": "status_reason",      "type": "string",    "required": false, "nullable": true }
   ],
   "handling": {
-    "malformed_json": "quarantine_scan_events under DQ-EVT-001 with the raw line kept",
-    "undeclared_field": "quarantine_scan_events under DQ-EVT-001 with the field name kept",
-    "unsupported_schema_version": "quarantine_scan_events under DQ-EVT-001",
+    "malformed_json": "quarantine_scan_event_stream under DQ-EVT-001 with the raw line kept",
+    "undeclared_field": "quarantine_scan_event_stream under DQ-EVT-001 with the field name kept",
+    "unsupported_schema_version": "quarantine_scan_event_stream under DQ-EVT-001",
     "replayed_event_id": "first arrival trusted; replay quarantined under DQ-EVT-001",
-    "outside_watermark": "quarantine_scan_events under DQ-EVT-001; inside-watermark late events stay trusted with is_late = true"
+    "outside_watermark": "quarantine_scan_event_stream under DQ-EVT-001; inside-watermark late events stay trusted with is_late = true"
   },
   "sample_event": {
     "source_record_id": "EVTREC000001",

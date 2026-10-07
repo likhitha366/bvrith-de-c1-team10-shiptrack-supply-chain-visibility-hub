@@ -18,8 +18,8 @@ The current Week 6 shipment framework evaluates **100,020** candidate shipment r
 | DQ-TIM-001 | Chronology | 30 | Incorrect timestamp relationships can distort delivery-duration and on-time metrics. |
 | DQ-SCN-001 | Scan sequence | 28 | Invalid scan sequencing can affect shipment-event tracking and event chronology. |
 | DQ-RTE-001 | Route consistency | 22 | Route/hub or route-attribute mismatches can misrepresent shipment routing. |
-| DQ-DEL-001 | Delivery/status consistency | 20 | Inconsistent delivery and status fields can affect shipment outcome reporting. |
-| DQ-MEA-001 | Measures | 10 | Invalid shipment measures can affect operational and financial metrics. |
+| DQ-DEL-001 | Delivery/status consistency | 10 | Inconsistent delivery and status fields can affect shipment outcome reporting. |
+| DQ-MEA-001 | Measures | 20 | Invalid shipment measures can affect operational and financial metrics. |
 | DQ-EVT-001 | Event/schema | 0 | No failures were reported for this rule in the current execution. |
 
 > Rule failure counts are **rule-level counts**. A single shipment can fail more than one rule, so these counts do not sum to the number of quarantined records.
@@ -89,4 +89,26 @@ The shipment DQ framework contains eight rule IDs. The current implementation in
 
 For scan events, a fixed `event_type` progression is not enforced because the available event types do not define a strict linear business progression in the current schema.
 
-Other-entity DQ checks and controlled correction/replay are separate Week 6 work items and should only be marked complete after their execution evidence is captured.
+Controlled correction/replay is a separate Week 6 work item and is marked complete only after its execution evidence is captured.
+
+---
+
+## 7. Other Entities — Executed Results
+
+Source: Part B of `notebooks/04_data_quality_checks.ipynb` (run of 24 September 2026). Each entity is routed to `trusted_*` or `quarantine_*`.
+
+| Entity | Rules | Candidate | Trusted | Quarantine | Difference | Result | Overlap |
+|---|---|---:|---:|---:|---:|---|---:|
+| Hubs | DQ-HUB-001 identity, DQ-HUB-002 enum, DQ-HUB-003 dates | 14 | 14 | 0 | 0 | PASS | 0 |
+| Carriers | DQ-CAR-001 identity, DQ-CAR-002 enum, DQ-CAR-003 dates | 10 | 10 | 0 | 0 | PASS | 0 |
+| Routes | DQ-RT-001 identity, DQ-RT-002 reference, DQ-RT-003 enum, DQ-RT-004 dates, DQ-RT-005 measures | 107 | 103 | 4 | 0 | PASS | 0 |
+| Scan events | DQ-SCN-001 identity, DQ-SCN-002 enum, DQ-SCN-003 timestamp | 710,666 | 710,666 | 0 | 0 | PASS | 0 |
+| Exceptions | DQ-EXC-001 identity, DQ-EXC-002 reference, DQ-EXC-003 enum, DQ-EXC-004 chronology | 18,352 | 18,330 | 24 | -2 | FAIL | 0 |
+
+### Open item — exceptions reconciliation
+
+The exceptions run shows Trusted + Quarantine = 18,354 against 18,352 Candidate rows. The join to shipments in that run multiplied exception rows whose `shipment_id` appears twice in `silver_shipments`. The notebook cell now joins to `SELECT DISTINCT shipment_id`; the cell must be rerun and this table updated with the new result before Week 6 is closed. `05_gold_aggregations.ipynb` and `06_powerbi_export.ipynb` must be rerun afterwards because `trusted_exceptions` feeds `gold_fact_shipment_exception`.
+
+### Rule-ID note
+
+The entity rule IDs above are team-defined. They cover the checks that the approved catalogue assigns to these entities under `DQ-REF-001`, `DQ-RTE-001`, `DQ-MEA-001`, `DQ-TIM-001` and `DQ-SCN-001`.
