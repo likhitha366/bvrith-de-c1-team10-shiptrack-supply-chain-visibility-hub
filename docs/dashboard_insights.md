@@ -1,92 +1,126 @@
-# Dashboard Insights
+# Dashboard Insights — ShipTrack
 
-**Project:** ShipTrack — Supply Chain Visibility Hub  
-**Reporting stage:** Week 09  
-**Source:** Approved Gold outputs used by the Week 08 Power BI dashboard and carried into Week 09 refinement
+**Week:** 9 | **Team:** 10 | **Report:** `dashboard/powerbi_dashboard.pbix`
+**Scope of every insight below:** all trusted shipments booked 1 January – 29 June 2026, no slicer applied, unless a scope is stated. Synthetic data; fictional educational analysis.
+
+Every value is calculated from the approved Gold tables (`gold_fact_shipment`, `gold_fact_shipment_exception`, `gold_shipment_delay_summary`, `gold_shipment_status_exception_summary`) and can be reproduced from `data_sample/gold_exports/`.
 
 ---
 
-## 1. Dashboard Scope
+## 1. Headline KPIs
 
-The dashboard uses the following Gold tables:
+| KPI | Value | Owning Gold table |
+|---|---:|---|
+| Total Shipments | 99,857 | `gold_fact_shipment` |
+| Delivered Shipments | 77,929 (78.0 %) | `gold_fact_shipment` |
+| On-Time Delivery Rate | 74.76 % | `gold_fact_shipment` |
+| Average Delay, late deliveries only | 229.6 minutes (19,152 late deliveries) | `gold_fact_shipment` |
+| Average End-to-End Transit | 32.2 hours | `gold_fact_shipment` |
+| Exception Rate | 14.79 % (14,772 shipments) | `gold_fact_shipment_exception` |
+| First-Attempt Delivery Success | 86.09 % | `gold_fact_shipment` |
 
-- `gold_shipment_daily_metrics` — daily shipment and delivery-performance trends
-- `gold_carrier_metrics` — carrier-level shipment and delivery performance
-- `gold_route_metrics` — route-level shipment and delivery performance
-- `gold_hub_metrics` — hub-level shipment flow and delivery performance
+## 2. Insights
 
-The dashboard is intended to communicate shipment volume, delivery performance and operational comparisons without bypassing the Gold layer.
+### Insight 1 — Priority shipments miss their promise most often
 
-## 2. Evidence-Backed Observations
+| Field | Content |
+|---|---|
+| Question | Does a higher service level deliver more reliably? |
+| Observation | On-time rate is 92.7 % for STANDARD (37,906 shipments), 77.1 % for EXPRESS (41,027) and 37.7 % for PRIORITY (20,924). PRIORITY is also the fastest: average transit 27.9 h against 34.8 h for STANDARD. |
+| Page / visual | Performance — delay band by service level; Overview — service-level slicer with the on-time card |
+| Owning Gold | `gold_fact_shipment` (`service_level`, `on_time_flag`, `transit_hours`) |
+| Interpretation | PRIORITY shipments are moved faster but are judged against a tighter promise, so they are late more often. |
+| Limitation | This is a hypothesis about promise windows. Gold does not store how each promise was set. |
 
-### 1. Daily shipment activity is available for trend analysis
+### Insight 2 — Two carriers are about ten points below the rest
 
-The daily Gold table contains **180 verified rows**, representing the current booking-date aggregation used for daily reporting. This supports a time-based shipment-volume view in Power BI.
+| Field | Content |
+|---|---|
+| Question | Which carriers need attention? |
+| Observation | C008 HarborLink Cargo (65.2 %) and C004 DeltaLine Transport (66.8 %) have the lowest on-time rates. The other seven carriers are between 75.6 % and 77.2 %. |
+| Page / visual | Performance — carrier table |
+| Owning Gold | `gold_fact_shipment` joined to `gold_dim_carrier`; summary in `gold_carrier_performance_summary` |
+| Interpretation | Both carriers are the RAIL carriers; RAIL as a mode is at 66.0 % on time against about 76.4 % for ROAD and AIR. The gap follows the mode, not one company. |
+| Limitation | Carrier and mode cannot be separated with the current data because each carrier has one mode. |
 
-**Owning Gold table:** `gold_shipment_daily_metrics`  
-**Evidence:** Week 07 verified Gold output count
+### Insight 3 — Reliability depends strongly on where the shipment starts
 
-### 2. Carrier-level comparison is supported by a compact summary
+| Field | Content |
+|---|---|
+| Question | Is performance even across regions? |
+| Observation | On-time rate by origin region: North 82.9 %, South 76.1 %, West 75.0 %, East 66.1 %, Central 60.5 %. Central also has the longest average transit (38.1 h). |
+| Page / visual | Overview — status by region; region slicer with the on-time card |
+| Owning Gold | `gold_fact_shipment[origin_hub_id]` → `gold_dim_hub[region]` |
+| Interpretation | Central and East origins are the weakest part of the network. |
+| Limitation | Region is the origin hub's region only; destination effects are not separated. |
 
-`gold_carrier_metrics` contains **9 verified carrier rows**. This supports carrier-level comparison of the shipment and delivery metrics implemented in the Gold layer.
+### Insight 4 — Route performance is extreme, not gradual
 
-**Owning Gold table:** `gold_carrier_metrics`  
-**Evidence:** Week 07 verified Gold output count
+| Field | Content |
+|---|---|
+| Question | Are late deliveries spread across routes or concentrated? |
+| Observation | Some routes with about 1,000 shipments are almost always on time (R031 100 %, R030 99.9 %, R055 99.9 %) while others are never on time (R027, R096, R047, R028 and R083 are all at 0 %). |
+| Page / visual | Performance — route volume vs on-time rate |
+| Owning Gold | `gold_route_reliability_summary`, `gold_fact_shipment` |
+| Interpretation | A 0 % route points to a promise that the lane cannot meet (expected transit hours set too low), not to day-to-day operations. These lanes should be reviewed first. |
+| Limitation | Hypothesis only. The data is synthetic and the promise-setting rule is not in Gold. |
 
-### 3. Route-level operational comparison is supported
+### Insight 5 — One late delivery in three is more than four hours late
 
-`gold_route_metrics` contains **100 verified route rows**. The table supports route-level shipment-volume and delivery-performance analysis in the dashboard.
+| Field | Content |
+|---|---|
+| Question | When we are late, how late? |
+| Observation | Of 77,929 delivered shipments: 75.4 % on time, 7.9 % late by 1–60 minutes, 8.3 % late by 61–240 minutes and 8.4 % late by more than 240 minutes. |
+| Page / visual | Performance — delay band column chart |
+| Owning Gold | `gold_shipment_delay_summary` (`delay_band`, `shipment_count`) |
+| Interpretation | Lateness is not mostly small slips; the three late bands are almost equal in size. |
+| Limitation | This table is on a **delivery-date** basis. Its on-time share (75.4 %) is not the same measure as the KPI card (74.76 %), which excludes shipments without a valid promise. |
 
-**Owning Gold table:** `gold_route_metrics`  
-**Evidence:** Week 07 verified Gold output count
+### Insight 6 — Address issues are the largest exception type
 
-### 4. Hub-level shipment flow can be compared
+| Field | Content |
+|---|---|
+| Question | What kind of exception happens most? |
+| Observation | 18,306 exception occurrences on 14,772 shipments. ADDRESS_ISSUE is 5,643 (30.8 %); the other six types are each between 2,072 and 2,173. 5,604 exceptions (30.6 %) are still OPEN and 5,053 are HIGH severity. |
+| Page / visual | Exceptions + Live — exception type column chart and severity card |
+| Owning Gold | `gold_fact_shipment_exception` |
+| Interpretation | Address validation at booking is the single change with the largest possible effect on exception volume. |
+| Limitation | Exception rate is nearly flat across carriers (14.4–15.1 %), so exceptions do not explain the carrier on-time gap. |
 
-`gold_hub_metrics` contains **13 verified hub rows**, supporting hub-level shipment-flow and delivery-performance views.
+### Insight 7 — Volume and reliability are stable month to month
 
-**Owning Gold table:** `gold_hub_metrics`  
-**Evidence:** Week 07 verified Gold output count
+| Field | Content |
+|---|---|
+| Question | Is there a trend over the six months? |
+| Observation | Monthly bookings stay between 15,514 (February) and 17,277 (March). Monthly on-time rate stays between 74.4 % and 75.3 %. |
+| Page / visual | Overview — shipments over time; month slicer |
+| Owning Gold | `gold_fact_shipment[booking_date]` → `gold_dim_date` |
+| Interpretation | There is no seasonal effect in this period. The differences that matter are by service level, mode, region and route. |
+| Limitation | Only six months of bookings are available. |
 
-### 5. The Gold layer provides different reporting grains
+### Insight 8 — The whole open backlog is older than two weeks
 
-The four Gold tables represent different grains: booking date, carrier, route and hub. They should therefore be used for the questions each table was designed to answer rather than being treated as one interchangeable dataset.
+| Field | Content |
+|---|---|
+| Question | What is still open? |
+| Observation | 15,858 shipments are not delivered, returned or cancelled (IN_TRANSIT 6,906, AT_HUB 4,954, OUT_FOR_DELIVERY 3,998). All of them are in the `15_PLUS_DAYS` ageing band. |
+| Page / visual | Exceptions + Live — status × ageing × exception table |
+| Owning Gold | `gold_shipment_status_exception_summary` (snapshot 29 September 2026) |
+| Interpretation | No conclusion about operations should be drawn from the ageing band. |
+| Limitation | The source data ends on 29 June 2026 and the snapshot was taken three months later, so every open shipment is automatically older than 15 days. Ageing only becomes meaningful with a snapshot taken close to the data end date. |
 
-### 6. Dashboard metrics should be reconciled to their owning Gold table
+## 3. Filtered reconciliation example
 
-A Power BI value should be considered validated only when the equivalent Gold aggregation agrees under the same filter scope. This is particularly important when visuals from different Gold tables appear on the same dashboard page.
+| Filter state | Measure | Gold value |
+|---|---|---:|
+| `carrier_id = 'C002'`, booking month 2026-06 | Total Shipments | 2,242 |
+| same | On-Time Delivery Rate | 76.28 % (1,720 eligible delivered) |
 
-## 3. Business Interpretation
+The same slice is used in `notebooks/06_powerbi_export.ipynb` section 11.
 
-The current dashboard structure supports three broad questions:
+## 4. What the dashboard cannot show
 
-1. **How much shipment activity is occurring over time?** — daily Gold metrics.
-2. **How does delivery performance vary across operational dimensions?** — carrier, route and hub Gold summaries.
-3. **Can the reported dashboard values be traced back to governed data?** — reconciliation to the owning Gold table.
-
-These observations describe what the available Gold data can support. They do not establish causal reasons for delays, route performance or carrier performance without additional approved data.
-
-## 4. Dashboard-to-Gold Mapping
-
-| Dashboard Analysis | Gold Table | Main Reporting Use |
-|---|---|---|
-| Daily shipment trend | `gold_shipment_daily_metrics` | Shipment volume and delivery trends |
-| Carrier comparison | `gold_carrier_metrics` | Carrier performance comparison |
-| Route comparison | `gold_route_metrics` | Route performance comparison |
-| Hub comparison | `gold_hub_metrics` | Hub flow and performance comparison |
-
-## 5. Week 09 Validation Checklist
-
-- [x] Dashboard reporting remains based on approved Gold outputs.
-- [x] Gold table grains are documented.
-- [x] Verified Gold row counts are recorded.
-- [x] Dashboard-to-Gold ownership is documented.
-- [x] Every final dashboard KPI has a recorded same-filter reconciliation result.
-- [x] Week 09 refinement screenshots are added when genuine final evidence is available.
-
-## 6. Limitations
-
-- The Gold row counts describe the current executed dataset and may change when upstream Trusted data changes.
-- GitHub cannot inspect the internal PBIX visual configuration as ordinary Markdown/source content.
-- The current Gold summaries support descriptive analysis; they should not be used to claim operational causation that is not represented in the Gold data.
-
-**Status:** Dashboard insight documentation updated through Week 09 without inventing dashboard values or unsupported causal conclusions.
+- Causes of delay. Gold has outcomes and exception types, not root causes.
+- Cost or revenue impact. Freight amount is in Gold but no cost-of-delay field exists.
+- Customer-level effects. There is no customer dimension.
+- Live status. The report is batch; the Week-10 stream is a separate table.

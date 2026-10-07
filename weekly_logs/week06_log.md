@@ -57,8 +57,8 @@ Rule-level failure counts:
 | DQ-TIM-001 | 30 |
 | DQ-SCN-001 | 28 |
 | DQ-RTE-001 | 22 |
-| DQ-DEL-001 | 20 |
-| DQ-MEA-001 | 10 |
+| DQ-DEL-001 | 10 |
+| DQ-MEA-001 | 20 |
 | DQ-EVT-001 | 0 |
 
 Rule-level counts can exceed 163 because one quarantined shipment may fail multiple rules.
@@ -84,7 +84,8 @@ Rule-level counts can exceed 163 because one quarantined shipment may fail multi
 - `docs/data_quality_summary.md`
 - `weekly_logs/week06_log.md`
 
-Execution screenshots and notebook outputs remain Databricks-side evidence and should be added to `screenshots/` when available.
+- `notebooks/04_data_quality_checks.ipynb` — executed notebook: Part A shipments, Part B hubs, carriers, routes, scan events and exceptions.
+- `screenshots/week06_*` — DQ evaluation, rule failure counts, reconciliation, overlap and multi-rule quarantine evidence.
 
 ---
 
@@ -105,10 +106,10 @@ The shipment DQ framework has executed successfully, but Week 6 is not yet fully
 
 Remaining items:
 
-1. Complete and execute DQ coverage for the other required entities.
-2. Implement and demonstrate controlled correction + replay for a quarantined record.
-3. Capture final Databricks evidence for the completed Week 6 requirements.
-4. Ensure the final Week 6 notebook(s) are committed to the GitHub repository.
+1. Rerun the exceptions cell in Part B: the run of 24 September shows Trusted 18,330 + Quarantine 24 against 18,352 Candidate rows (difference -2, FAIL). Other entities reconcile: hubs 14 = 14 + 0, carriers 10 = 10 + 0, routes 107 = 103 + 4, scan events 710,666 = 710,666 + 0.
+2. Run the cross-entity DQ summary cell in Part B (it has no output yet).
+3. Implement and demonstrate controlled correction + replay for one quarantined record.
+4. Rerun the Gold and export notebooks after the exceptions fix.
 
 These items should only be marked complete after execution evidence is available.
 
