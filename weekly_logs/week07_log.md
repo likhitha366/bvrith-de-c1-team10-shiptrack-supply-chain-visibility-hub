@@ -1,6 +1,7 @@
 # Week 07 Log — Gold Layer Development
 
 **Week:** 7  
+**Date range:** 8 September – 14 September 2026  
 **Team:** 10  
 **Project:** ShipTrack — Supply Chain Visibility Hub
 

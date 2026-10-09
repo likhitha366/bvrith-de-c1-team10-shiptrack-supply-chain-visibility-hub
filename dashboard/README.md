@@ -1,7 +1,11 @@
 # Power BI Dashboard — ShipTrack
 
-**Team:** 10 | **Weeks:** 8–9 | **File:** `dashboard/powerbi_dashboard.pbix`
+**Team:** 10 | **Weeks:** 8–9 | **File:** `dashboard/powerbi_1_2_3pages.pbit`
 **Upstream:** `notebooks/05_gold_aggregations.ipynb` → `notebooks/06_powerbi_export.ipynb`
+
+## 0. Dashboard file
+
+`dashboard/powerbi_1_2_3pages.pbit` is a Power BI template: it holds the model (14 Gold tables, 18 relationships) and the three report pages, but no data. Open it in Power BI Desktop and sign in to the Databricks SQL warehouse; the tables then load from `workspace.default`. A data-loaded `.pbix` is not committed to this repository. The first Week 8 draft (`Team10-PowerBI-Report.pbix`) was removed on 30 September when the template replaced it.
 
 ## 1. Purpose
 

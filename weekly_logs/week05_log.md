@@ -1,8 +1,8 @@
 # Week 05 Log — Silver Transformations
 
 **Week:** 5
-**Date range:** 7-13
-**Team:** [10]
+**Date range:** 7 August – 13 August 2026
+**Team:** 10
 **Project:** ShipTrack: Supply Chain Visibility Hub
 
 ---

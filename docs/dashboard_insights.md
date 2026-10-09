@@ -1,6 +1,6 @@
 # Dashboard Insights — ShipTrack
 
-**Week:** 9 | **Team:** 10 | **Report:** `dashboard/powerbi_dashboard.pbix`
+**Week:** 9 | **Team:** 10 | **Report:** `dashboard/powerbi_1_2_3pages.pbit`
 **Scope of every insight below:** all trusted shipments booked 1 January – 29 June 2026, no slicer applied, unless a scope is stated. Synthetic data; fictional educational analysis.
 
 Every value is calculated from the approved Gold tables (`gold_fact_shipment`, `gold_fact_shipment_exception`, `gold_shipment_delay_summary`, `gold_shipment_status_exception_summary`) and can be reproduced from `data_sample/gold_exports/`.

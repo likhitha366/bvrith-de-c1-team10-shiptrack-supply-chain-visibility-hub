@@ -1,7 +1,7 @@
 # Week 08 Log — Power BI Dashboard Draft
 
 **Week:** 8  
-**Date:** September 2026  
+**Date range:** 15 September – 21 September 2026  
 **Team:** 10  
 **Project:** ShipTrack — Supply Chain Visibility Hub
 
@@ -16,7 +16,7 @@ The goal for Week 08 was to hand the approved Gold outputs to Power BI and creat
 | Task | Owner | Status | Evidence |
 |---|---|---|---|
 | Prepared Week 07 Gold outputs for reporting | Team 10 | Done | Gold aggregation work |
-| Added Power BI dashboard artifact | Team 10 | Done | `dashboard/Team10-PowerBI-Report.pbix` |
+| Added Power BI dashboard artifact | Team 10 | Done | `dashboard/Team10-PowerBI-Report.pbix` (first draft; replaced on 30 September by `dashboard/powerbi_1_2_3pages.pbit`) |
 | Updated dashboard folder guidance | Team 10 | Done | `dashboard/README.md` |
 | Added Gold sample/export files used for reporting support | Team 10 | Done | `data_sample/gold_exports/` |
 | Added dashboard screenshots | Team 10 | Done | `screenshots/` |
@@ -54,7 +54,7 @@ _Updated 9 October 2026: the Gold layer was rebuilt by 30 September and the repo
 
 ## 5. Evidence Added to GitHub
 
-- `dashboard/Team10-PowerBI-Report.pbix`
+- `dashboard/Team10-PowerBI-Report.pbix` (first draft; replaced on 30 September by `dashboard/powerbi_1_2_3pages.pbit`)
 - `dashboard/README.md`
 - `data_sample/gold_exports/`
 - dashboard screenshots under `screenshots/`
