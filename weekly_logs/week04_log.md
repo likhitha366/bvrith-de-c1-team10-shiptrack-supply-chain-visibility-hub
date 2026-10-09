@@ -1,8 +1,8 @@
 # Week 04 Log — Bronze Ingestion
 
 **Week:** 4
-**Date range:** [31 july-6 aug]
-**Team:** [10]
+**Date range:** 31 July – 6 August 2026
+**Team:** 10
 **Project:** ShipTrack – Supply Chain Visibility Hub
 
 ---

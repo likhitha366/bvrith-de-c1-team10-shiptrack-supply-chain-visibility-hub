@@ -1,7 +1,7 @@
 # Week 09 Log — Dashboard Refinement and Insight Communication
 
 **Week:** 9  
-**Date:** September 2026  
+**Date range:** 22 September – 28 September 2026  
 **Team:** 10  
 **Project:** ShipTrack — Supply Chain Visibility Hub
 
@@ -15,7 +15,7 @@ The goal for Week 09 was to carry the Week 08 Gold-only Power BI dashboard forwa
 
 | Task | Owner | Status | Evidence |
 |---|---|---|---|
-| Carried the Week 08 PBIX forward | Team 10 | Done | `dashboard/Team10-PowerBI-Report.pbix` |
+| Carried the Week 08 report forward into the three-page version | Team 10 | Done | `dashboard/powerbi_1_2_3pages.pbit` |
 | Kept Gold tables as the reporting sources | Team 10 | Done | `dashboard/README.md`, Gold documentation |
 | Reviewed dashboard structure and business-question mapping | Team 10 | Done | Dashboard documentation |
 | Updated dashboard insight documentation | Team 10 | Done | `docs/dashboard_insights.md` |

@@ -1,8 +1,5 @@
 # ShipTrack: Supply chain visibility hub
 
-> **Student note:** Start with `00_START_HERE.md` and `00_TEMPLATE_INDEX.md`. The placeholder files inside this repo are the templates.
-
-
 **Program:** ZENAIZ x BVRIT Hyderabad Data Engineering Internship Program  
 **Track:** Data Engineering  
 **Duration:** 12 Weeks  
@@ -41,7 +38,7 @@
 | `src/` | Data generation and reusable quality helper scripts |
 | `notebooks/` | Databricks notebooks for exploration, Bronze, Silver, DQ, Gold, export, streaming |
 | `data_sample/` | Small sample raw/streaming data only; do not store large files |
-| `dashboard/` | Power BI `.pbix` file and dashboard notes |
+| `dashboard/` | Power BI template (`.pbit`) and dashboard notes |
 | `streaming/` | Streaming design, JSON event schema, Kafka-style design awareness |
 | `screenshots/` | Weekly evidence screenshots |
 | `weekly_logs/` | Weekly execution logs and AI transparency notes |

@@ -42,6 +42,23 @@ All shipment IDs, carrier names, hubs, routes, tracking events, and exception re
 
 ---
 
+## Volumes actually loaded
+
+The table above is the Week 2 plan. The files loaded in Week 4 are larger; these are the raw and Bronze counts printed by `notebooks/02_bronze_ingestion.ipynb`:
+
+| File | Rows loaded |
+|------|------------:|
+| shipments.parquet | 100,020 |
+| scan_events.csv | 710,666 |
+| exceptions.csv | 18,352 |
+| routes.csv | 107 |
+| hubs.json | 14 |
+| carriers.csv | 10 |
+
+Shipments in the loaded data are booked between 1 January and 29 June 2026.
+
+---
+
 # 4. Controlled Data Quality Issues
 
 To support Data Quality (DQ) validation during later stages of the project, controlled data issues are intentionally introduced.
