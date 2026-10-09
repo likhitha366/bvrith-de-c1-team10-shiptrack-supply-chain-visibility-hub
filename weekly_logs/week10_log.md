@@ -43,7 +43,7 @@ Show ShipTrack scan events arriving over time using two patterns: incremental JS
 
 | Blocker | Impact | Help Needed |
 |---|---|---|
-| All five drop files have the same name (`scan_event.json`) | They cannot be uploaded into one folder | Solved in the notebook: `find_drop()` accepts the pack folder layout or files renamed to the drop name |
+| All five drop files have the same name (`scan_event.json`) | They cannot be uploaded into one folder | Solved in the notebook: `find_drop()` accepts the pack folder layout or files renamed to the drop name, and `seed_source()` copies any missing drop into `week10_source/` from the repo checkout or the public GitHub repo |
 | Week-6 Trusted tables are named `trusted_*` (not `trusted_silver_*`) | The stream reference checks must find them | Notebook section 10 accepts both names and prints the table used for each reference |
 | The continuous pipeline must be created in the Databricks UI | If it is set to Triggered, live Bronze will not keep updating | Use Serverless ON and Pipeline mode Continuous (notebook section 18) |
 
@@ -60,7 +60,7 @@ Show ShipTrack scan events arriving over time using two patterns: incremental JS
 
 ### Executed results
 
-Recorded from the team's own Databricks run of the notebook. Source-pack line counts are not results.
+Recorded from the team's own Databricks run of the notebook. Source-pack line counts are not results. Notebook cell 22.1 prints these rows from the tables the run built; paste its output over the table below.
 
 | Check | Notebook cell | Result |
 |---|---|---|
@@ -77,7 +77,7 @@ Recorded from the team's own Databricks run of the notebook. Source-pack line co
 
 | Question | Response |
 |---|---|
-| Where AI helped | AI drafted the Week-10 notebook, the streaming design document and the event contract from the approved P10 playbook, the cohort Week-10 guide and the five official drop files, and explained Auto Loader, checkpoints and watermark behaviour. |
+| Where AI helped | AI drafted the Week-10 notebook, the streaming design document and the event contract from the approved P10 playbook, the cohort Week-10 guide and the five official drop files, and explained Auto Loader, checkpoints and watermark behaviour. AI also added the source-seeding helper (section 2) and the results cell (22.1), and checked the notebook logic in a local open-source Spark dry run with a plain file stream in place of Auto Loader. That dry run is not a Databricks run and none of its numbers are recorded in this log. |
 | What we changed after AI suggestion | Before running we confirm the catalog, schema and volume path for our workspace and the reference tables printed in notebook section 10. Any cell changed during the Databricks run is listed in this row. |
 | What we verified manually | Source line counts against `source_manifest.csv`; in the Databricks run we check per-file Bronze counts, the replayed `event_id`, the quarantine reasons, the reconciliation, the no-new-file rerun and the live count growth before saving screenshots. |
 | What we can explain without AI | Producer → landing → Auto Loader → checkpoint → Bronze → Candidate → Trusted / Quarantine → Gold; why a replayed `event_id` is not a checkpoint problem; how the 24-hour watermark is calculated; why the count stops when the producer stops. |
