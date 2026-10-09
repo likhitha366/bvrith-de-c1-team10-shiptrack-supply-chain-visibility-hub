@@ -26,20 +26,27 @@ The goal for Week 09 was to carry the Week 08 Gold-only Power BI dashboard forwa
 ## 3. Key Decisions
 
 - Week 09 uses the existing Week 08 dashboard as the starting point rather than creating a new dashboard from scratch.
-- The four approved Gold tables remain the reporting sources.
+- The approved Gold facts, summaries and dimensions remain the only reporting sources.
 - Dashboard insights describe observable data patterns and do not claim causes that are not supported by the Gold data.
 - Different Gold grains are kept conceptually separate; no unsafe relationship is introduced merely to force unrelated tables to share filters.
 
 ## 4. Dashboard / Gold Mapping
 
+_Corrected 9 October 2026: an earlier version of this log listed four superseded tables (`gold_shipment_daily_metrics`, `gold_carrier_metrics`, `gold_route_metrics`, `gold_hub_metrics`). The tables below are the ones `notebooks/05_gold_aggregations.ipynb` builds; row counts are the printed output of its last cell._
+
 | Analysis | Owning Gold Table | Current Verified Rows |
 |---|---|---:|
-| Daily shipment trend | `gold_shipment_daily_metrics` | 180 |
-| Carrier comparison | `gold_carrier_metrics` | 9 |
-| Route comparison | `gold_route_metrics` | 100 |
-| Hub comparison | `gold_hub_metrics` | 13 |
+| Shipment volume, delivery, on-time rate and transit | `gold_fact_shipment` | 99,857 |
+| Scan milestone timeline | `gold_fact_shipment_scan` | 710,666 |
+| Exception counts and severity | `gold_fact_shipment_exception` | 18,330 |
+| Delay bands | `gold_shipment_delay_summary` | 52,381 |
+| Carrier comparison | `gold_carrier_performance_summary` | 4,936 |
+| Route reliability | `gold_route_reliability_summary` | 17,930 |
+| Hub throughput and dwell | `gold_hub_throughput_summary` | 9,445 |
+| Open backlog and ageing | `gold_shipment_status_exception_summary` | 47 |
+| Slicers and labels | `gold_dim_date`, `gold_dim_hub`, `gold_dim_carrier`, `gold_dim_route`, `gold_dim_service_level`, `gold_dim_status` | 365 / 14 / 10 / 103 / 3 / 6 |
 
-The row counts are the verified Gold outputs documented from Week 07 and are not claimed as new Week 09 measurements.
+The row counts are the verified Gold outputs documented from Week 07 and the Week 08 export manifest, and are not claimed as new Week 09 measurements.
 
 ## 5. Evidence Added to GitHub
 

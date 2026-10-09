@@ -31,14 +31,26 @@ The goal for Week 08 was to hand the approved Gold outputs to Power BI and creat
 
 ## 4. Dashboard Inputs
 
-The reporting layer uses:
+_Corrected 9 October 2026: an earlier version of this log listed four superseded tables (`gold_shipment_daily_metrics`, `gold_carrier_metrics`, `gold_route_metrics`, `gold_hub_metrics`). The tables below are the ones `notebooks/05_gold_aggregations.ipynb` builds; fact and summary row counts are the printed output of its last cell, and dimension row counts are from `data_sample/gold_exports/shiptrack_gold_export_manifest.json`._
 
-- `gold_shipment_daily_metrics`
-- `gold_carrier_metrics`
-- `gold_route_metrics`
-- `gold_hub_metrics`
+The Power BI model reads these 14 Gold tables:
 
-The current verified Gold row counts are 180, 9, 100 and 13 respectively.
+| Gold table | Kind | Verified rows |
+|---|---|---:|
+| `gold_fact_shipment` | Fact | 99,857 |
+| `gold_fact_shipment_scan` | Fact | 710,666 |
+| `gold_fact_shipment_exception` | Fact | 18,330 |
+| `gold_shipment_delay_summary` | Summary | 52,381 |
+| `gold_carrier_performance_summary` | Summary | 4,936 |
+| `gold_route_reliability_summary` | Summary | 17,930 |
+| `gold_hub_throughput_summary` | Summary | 9,445 |
+| `gold_shipment_status_exception_summary` | Summary | 47 |
+| `gold_dim_date` | Dimension | 365 |
+| `gold_dim_hub` | Dimension | 14 |
+| `gold_dim_carrier` | Dimension | 10 |
+| `gold_dim_route` | Dimension | 103 |
+| `gold_dim_service_level` | Dimension | 3 |
+| `gold_dim_status` | Dimension | 6 |
 
 ## 5. Evidence Added to GitHub
 
