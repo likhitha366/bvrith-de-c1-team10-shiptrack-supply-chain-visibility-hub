@@ -102,7 +102,7 @@ Pass condition: the Power BI card shows the same value under the same filter sta
 
 ## 9. Evidence
 
-`screenshots/week08_*` (model, Gold connection, three pages) and `screenshots/week09_*` (refined pages, filter interaction, filtered reconciliation).
+`screenshots/week08_*` (Gold connection, first draft, export-notebook checks) and `screenshots/week09_*` (the three refined pages; the Overview capture has slicers applied). A filtered-reconciliation screenshot is not in the repo yet.
 
 ## 10. Known limitations
 
