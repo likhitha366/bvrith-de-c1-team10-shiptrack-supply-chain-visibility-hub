@@ -31,9 +31,9 @@ The goal for Week 08 was to hand the approved Gold outputs to Power BI and creat
 
 ## 4. Dashboard Inputs
 
-_Corrected 9 October 2026: an earlier version of this log listed four superseded tables (`gold_shipment_daily_metrics`, `gold_carrier_metrics`, `gold_route_metrics`, `gold_hub_metrics`). The tables below are the ones `notebooks/05_gold_aggregations.ipynb` builds; fact and summary row counts are the printed output of its last cell, and dimension row counts are from `data_sample/gold_exports/shiptrack_gold_export_manifest.json`._
+The first Power BI draft (25 September) read the four original Gold tables: `gold_shipment_daily_metrics`, `gold_carrier_metrics`, `gold_route_metrics` and `gold_hub_metrics` (180, 9, 100 and 13 rows). Evidence: `screenshots/week08_gold_connection.png` and `screenshots/week08_powerbi_dashboard.png`.
 
-The Power BI model reads these 14 Gold tables:
+_Updated 9 October 2026: the Gold layer was rebuilt by 30 September and the report was reconnected to it (`screenshots/week08_power_bi_data.png`). The model in `dashboard/powerbi_1_2_3pages.pbit` now reads the 14 Gold tables below. Fact and summary row counts are the printed output of the last cell of `notebooks/05_gold_aggregations.ipynb`; dimension row counts are from `data_sample/gold_exports/shiptrack_gold_export_manifest.json`._
 
 | Gold table | Kind | Verified rows |
 |---|---|---:|

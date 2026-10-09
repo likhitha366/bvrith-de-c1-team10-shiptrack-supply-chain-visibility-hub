@@ -23,7 +23,7 @@ The goal for Week 07 was to develop and validate the Gold layer using the Truste
 
 ## 3. Implemented Gold Tables
 
-_Corrected 9 October 2026: an earlier version of this log listed four superseded tables (`gold_shipment_daily_metrics`, `gold_carrier_metrics`, `gold_route_metrics`, `gold_hub_metrics`). The tables below are the ones `notebooks/05_gold_aggregations.ipynb` builds; row counts are the printed output of its last cell._
+_Updated 9 October 2026: the first Week 7 build (25 September) produced four Gold tables: `gold_shipment_daily_metrics` (180 rows), `gold_carrier_metrics` (9), `gold_route_metrics` (100) and `gold_hub_metrics` (13). The Gold layer was rebuilt by 30 September as the facts and summaries below, which are what `notebooks/05_gold_aggregations.ipynb` builds now. Row counts are the printed output of its last cell._
 
 | Gold Table | Grain | Verified Rows |
 |---|---|---:|
